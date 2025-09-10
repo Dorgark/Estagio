@@ -1,0 +1,26 @@
+[
+    {
+        "id":1,
+        "nome": "Leite",
+        "preco": 9.99,
+        "categoria": "alimentos"
+    },
+    {
+        "id":2,
+        "nome": "Camisa",
+        "preco": 149.99,
+        "categoria": "roupas"
+    },
+    {
+        "id":3,
+        "nome": "Notebook",
+        "preco": 1699.99,
+        "categoria": "eletronico"
+    },
+    {
+        "id":1,
+        "nome": "Mesa",
+        "preco": 249.99,
+        "categoria": "moveis"
+    }
+]
