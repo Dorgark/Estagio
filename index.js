@@ -1,25 +1,51 @@
 const express = require("express")
 const app = express()
-const produtos = require("./produtos.json")
+const mongoose = require("mongoose")
+const produto = require("./schemas/produto")
+
+app.use(express.json())
+
+mongoose.connect("mongodb+srv://caiquebpa:wotAmqQAA3GCmz9y@cluster0.yhtdz1g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+
+    .then(() => {
+        console.log('Conectou ao banco!')
+    
+        app.listen(3000, () => {
+            console.log("Servidor rodando no http://localhost:3000")})
+        })
+
+    .catch((err) => console.log(err))
+
+
+app.post("/produtos", async (req, res) => {
+    try{
+        const novoProduto = await produto.create(req.body)
+        res.json(novoProduto)
+    } 
+    catch(error){
+        res.send(error)
+    }
+})
+
+app.get("/produtos", async (req, res) =>{
+    try{
+        const produtos = await produto.find
+        res.json(produtos)
+    }
+    catch(error)
+    {
+        res.send(error)
+    }
+})
+
 
 app.get("/", function(req,res)
 {
-    res.sendFile(__dirname + "/Front/index.html")
+    res.send("Teste API Estagio")
 })
 
-app.get("/produtos", function(req,res)
-{
-    res.json(produtos)
-})
+/*
+    user + caiquebpa
+    password + wotAmqQAA3GCmz9y
 
-
-app.get("/parametros/:nome/:cargo/:cor", function(req,res)
-{
-    res.send("Olá "+req.params.nome + " Seu cargo é "+ req.params.cargo + " Sua cor favorita é "+ req.params.cor)
-})
-
-
-app.listen(8081, function()
-{
-    console.log("Servidor rodando na porta 8081")
-})
+*/
