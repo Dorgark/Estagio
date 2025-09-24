@@ -17,7 +17,7 @@ mongoose.connect("mongodb+srv://caiquebpa:wotAmqQAA3GCmz9y@cluster0.yhtdz1g.mong
     .catch((err) => console.log(err))
 
 
-app.post("/produtos", async (req, res) => {
+app.post("/produto", async (req, res) => {
     try{
         const novoProduto = await produto.create(req.body)
         res.json(novoProduto)
