@@ -7,27 +7,20 @@
     font-family: "Poppins", sans-serif;
 }
 
+.title
+{
+    font-size: 30px;
+    font-weight: bold;
+}
+
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url(/Front/img/background.jpg);
+    background-color: rgb(141, 0, 206);
     height: 100vh;
     width: 100vw;
+    gap: 100px;
 }
 
-.divLogin
-{
-    display: flex;
-    justify-content: center;
-    background-color: rgb(96, 0, 134);
-    padding: 75px;
-    border-radius: 30px;
-}
-
-input{
-    height: 40px;
-    width: 300px;
-    border-radius: 10px;
-}
-    
