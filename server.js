@@ -18,9 +18,16 @@ mongoose.connect("mongodb+srv://caiquebpa:wotAmqQAA3GCmz9y@cluster0.yhtdz1g.mong
 
 
 app.post("/produto", async (req, res) => {
+    const {nome, preco, categoria} = (req.body)
+            const novoProduto ={
+                nome,
+                preco,
+                categoria
+            }
+    
     try{
-        const novoProduto = await produto.create(req.body)
-        res.json(novoProduto)
+        await produto.create(novoProduto)
+        console.log("Produto adicionado ao banco com sucesso")
     } 
     catch(error){
         res.send(error)
@@ -29,7 +36,7 @@ app.post("/produto", async (req, res) => {
 
 app.get("/produtos", async (req, res) =>{
     try{
-        const produtos = await produto.find
+        const produtos = await produto.find()
         res.json(produtos)
     }
     catch(error)
