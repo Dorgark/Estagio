@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const produto = require("./schemas/produto")
+const site = require("./Front/HTML/home.html")
 
 app.use(express.json())
 
@@ -48,7 +49,7 @@ app.get("/produtos", async (req, res) =>{
 
 app.get("/", function(req,res)
 {
-    res.send("Teste API Estagio")
+    res.send(site())
 })
 
 /*
