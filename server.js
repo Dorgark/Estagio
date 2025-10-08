@@ -2,11 +2,12 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const produto = require("./schemas/produto")
-const site = require("./Front/HTML/home.html")
+const cors = require("cors")
+require ("dotenv").config()
 
 app.use(express.json())
 
-mongoose.connect("mongodb+srv://caiquebpa:wotAmqQAA3GCmz9y@cluster0.yhtdz1g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.mongo_key)
 
     .then(() => {
         console.log('Conectou ao banco!')
@@ -49,7 +50,7 @@ app.get("/produtos", async (req, res) =>{
 
 app.get("/", function(req,res)
 {
-    res.send(site())
+    res.send("teste")
 })
 
 /*
