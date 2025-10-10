@@ -6,8 +6,9 @@ const cors = require("cors")
 require ("dotenv").config()
 
 app.use(express.json())
+app.use(cors())
 
-mongoose.connect(process.env.mongo_key)
+mongoose.connect(process.env.MONGO_KEY)
 
     .then(() => {
         console.log('Conectou ao banco!')
@@ -55,6 +56,6 @@ app.get("/", function(req,res)
 
 /*
     user + caiquebpa
-    password + wotAmqQAA3GCmz9y
+    password + gg0oJtxXUv94oQaJ
 
 */
