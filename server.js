@@ -1,61 +1,57 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
-const produto = require("./schemas/produto")
+const livro = require("./schemas/livro")
 const cors = require("cors")
+
 require ("dotenv").config()
 
+app.use(express.static("FRONTEND"))
 app.use(express.json())
 app.use(cors())
 
 mongoose.connect(process.env.MONGO_KEY)
 
     .then(() => {
-        console.log('Conectou ao banco!')
-    
-        app.listen(3000, () => {
-            console.log("Servidor rodando no http://localhost:3000")})
+        console.log("conectou ao banco com sucesso!")
+
+        app.listen(3000, () =>{
+            console.log("Servidor ligado no http://localhost:3000")
         })
+    })
 
     .catch((err) => console.log(err))
 
-
-app.post("/produto", async (req, res) => {
-    const {nome, preco, categoria} = (req.body)
-            const novoProduto ={
-                nome,
-                preco,
-                categoria
-            }
     
+app.get("/", (req,res) => {
+    res.sendFile(__dirname + "/FRONTEND/index.html")
+})
+
+
+app.post("/livro", async (req, res) =>{
+    const{titulo, autor, valor} = (req.body)
+        const novoLivro ={
+            titulo,
+            autor,
+            valor
+
+        }
     try{
-        await produto.create(novoProduto)
-        console.log("Produto adicionado ao banco com sucesso")
-    } 
+        await livro.create(novoLivro)
+        console.log("Livro adicionado ao banco com sucesso")
+    }
     catch(error){
         res.send(error)
     }
 })
 
-app.get("/produtos", async (req, res) =>{
+
+app.get("/livros", async (req, res) => {
     try{
-        const produtos = await produto.find()
-        res.json(produtos)
+        const livros = await livro.find()
+        res.json(livros)
     }
-    catch(error)
-    {
+    catch(error){
         res.send(error)
     }
 })
-
-
-app.get("/", function(req,res)
-{
-    res.send("teste")
-})
-
-/*
-    user + caiquebpa
-    password + gg0oJtxXUv94oQaJ
-
-*/
