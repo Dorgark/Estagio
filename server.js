@@ -1,12 +1,13 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
-const produto = require("./schemas/produto")
+const task = require("./schemas/task")
 const cors = require("cors")
-require ("dotenv").config()
+
 
 app.use(express.json())
 app.use(cors())
+require ("dotenv").config()
 
 mongoose.connect(process.env.MONGO_KEY)
 
@@ -20,16 +21,15 @@ mongoose.connect(process.env.MONGO_KEY)
     .catch((err) => console.log(err))
 
 
-app.post("/produto", async (req, res) => {
-    const {nome, preco, categoria} = (req.body)
-            const novoProduto ={
+app.post("/task", async (req, res) => {
+    const {nome, done} = (req.body)
+            const newTask ={
                 nome,
-                preco,
-                categoria
+                done
             }
     
     try{
-        await produto.create(novoProduto)
+        await task.create(newTask)
         console.log("Produto adicionado ao banco com sucesso")
     } 
     catch(error){
@@ -37,16 +37,49 @@ app.post("/produto", async (req, res) => {
     }
 })
 
-app.get("/produtos", async (req, res) =>{
+app.get("/tasks", async (req, res) =>{
     try{
-        const produtos = await produto.find()
-        res.json(produtos)
+        const tasks = await task.find()
+        res.json(tasks)
     }
     catch(error)
     {
         res.send(error)
     }
 })
+
+app.put("/task/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+
+    const taskAtualizado = await task.findByIdAndUpdate(
+      id,
+      updates,
+      { 
+        new: true,
+        runValidators: true 
+      }
+    );
+
+    if (!taskAtualizado) {
+      return res.status(404).json({ error: "Tarefa não encontrada" });
+    }
+
+    res.status(200).json({
+      message: "Tarefa atualizada com sucesso",
+      produto: taskAtualizado
+    });
+
+  } catch (error) {
+    console.error("Erro ao atualizar Tarefa:", error);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+});
 
 
 app.get("/", function(req,res)
@@ -56,6 +89,6 @@ app.get("/", function(req,res)
 
 /*
     user + caiquebpa
-    password + gg0oJtxXUv94oQaJ
+    password + sa71bOrIZH5vuPbo
 
 */

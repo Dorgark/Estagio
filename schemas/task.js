@@ -2,8 +2,7 @@ const mongoose = require("mongoose")
 
 const produtosSchema = new mongoose.Schema({
     nome: String,
-    preco: Number,
-    categoria: String,
+    done: Boolean,
 })
 
-module.exports = mongoose.model("produtos", produtosSchema)
+module.exports = mongoose.model("tasks", produtosSchema)
