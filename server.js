@@ -23,17 +23,16 @@ mongoose.connect(process.env.MONGO_KEY)
 
 app.post("/task", async (req, res) => {
     const {nome, done} = (req.body)
-            const newTask ={
-                nome,
-                done
-            }
+    const newTask ={nome, done}
     
     try{
-        await task.create(newTask)
-        console.log("Produto adicionado ao banco com sucesso")
+        const tarefaCriada = await task.create(newTask)
+        res.status(201).json(tarefaCriada);
+
     } 
+
     catch(error){
-        res.send(error)
+        res.status(500).json({ error: error.message });
     }
 })
 
@@ -81,12 +80,32 @@ app.put("/task/:id", async (req, res) => {
   }
 });
 
+app.delete("/task/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
-app.get("/", function(req,res)
-{
-    res.send("teste")
-})
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
 
+    
+    const taskDeletada = await task.findByIdAndDelete(id);
+
+    
+    if (!taskDeletada) {
+      return res.status(404).json({ error: "Tarefa não encontrada" });
+    }
+
+    
+    res.status(200).json({ message: "Tarefa deletada com sucesso" });
+
+  } catch (error) {
+    
+    console.error("Erro ao deletar Tarefa:", error);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+});
 /*
     user + caiquebpa
     password + sa71bOrIZH5vuPbo
