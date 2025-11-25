@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const produtosSchema = new mongoose.Schema({
-    nome: String,
+    name: String,
     done: Boolean,
 })
 

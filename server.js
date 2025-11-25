@@ -1,3 +1,4 @@
+require ("dotenv").config()
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
@@ -7,7 +8,7 @@ const cors = require("cors")
 
 app.use(express.json())
 app.use(cors())
-require ("dotenv").config()
+
 
 mongoose.connect(process.env.MONGO_KEY)
 
@@ -22,8 +23,8 @@ mongoose.connect(process.env.MONGO_KEY)
 
 
 app.post("/task", async (req, res) => {
-    const {nome, done} = (req.body)
-    const newTask ={nome, done}
+    const {name, done} = (req.body)
+    const newTask ={name, done}
     
     try{
         const tarefaCriada = await task.create(newTask)
@@ -69,10 +70,7 @@ app.put("/task/:id", async (req, res) => {
       return res.status(404).json({ error: "Tarefa não encontrada" });
     }
 
-    res.status(200).json({
-      message: "Tarefa atualizada com sucesso",
-      produto: taskAtualizado
-    });
+    res.status(200).json(taskAtualizado);
 
   } catch (error) {
     console.error("Erro ao atualizar Tarefa:", error);
@@ -106,8 +104,3 @@ app.delete("/task/:id", async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
-/*
-    user + caiquebpa
-    password + sa71bOrIZH5vuPbo
-
-*/
