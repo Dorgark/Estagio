@@ -14,11 +14,7 @@ mongoose.connect(process.env.MONGO_KEY)
 
     .then(() => {
         console.log('Conectou ao banco!')
-    
-        app.listen(3000, () => {
-            console.log("Servidor rodando no http://localhost:3000")})
-        })
-
+        console.log("Servidor rodando no http://localhost:3000")})
     .catch((err) => console.log(err))
 
 
@@ -104,3 +100,11 @@ app.delete("/task/:id", async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
+
+if (require.main === module) {
+    app.listen(3000, () => {
+        console.log("Servidor rodando no http://localhost:3000");
+    });
+}
+
+module.exports = app;
